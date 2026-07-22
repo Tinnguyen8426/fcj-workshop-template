@@ -1,126 +1,57 @@
 ---
 title: "Event 1"
-date: 2024-01-01
+date: 2026-05-23
 weight: 1
 chapter: false
 pre: " <b> 4.1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
+# Summary Report: "Context Is Everything: Making AI Actually Work for You"
 
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+### Event Purpose
+- Identify reasons why AI responds inefficiently and clarify the importance of contextual data (Context).
+- Shift mindset from writing standalone prompts to building a synchronized context management system.
+- Approach the Simple Context Framework to optimize work efficiency between developers and AI.
+- Orient practical AI project ideas suitable for students' implementation capabilities.
 
-### Event Objectives
+### Speaker List
+- **Mr. Tinh Truong** - Platform Engineer at GoTymeX (co-organized by AWS Vietnam).
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+### Highlighted Content
 
-### Speakers
+#### Concept and Role of "Context"
+- AI responds incorrectly mostly due to input lacking background information. AI cannot deduce objectives accurately if users do not declare them clearly.
+- A complete context structure includes: Goal + Situation + Technical Constraints + Relevant Evidence.
+- Managing input context is the deciding factor that directly affects the quality of AI model output results.
 
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+#### Simple Context Framework
+Establish a 4-part information structure before making requests to AI:
+- **Goal:** Clearly define the specific result to be achieved.
+- **Relevant info:** Filter the exact volume of necessary data, completely eliminating noise or redundant information.
+- **Constraints:** Strict limits on technology (Tech stack, libraries), time, implementation style, and output format.
+- **Success criteria:** Establish specific criteria to evaluate whether results meet requirements.
 
-### Key Highlights
+#### Orientation of AI Projects for Students
+Thinking of providing enough background information for AI to complete tasks accurately with 4 suggested project development directions:
+- **AI Study Assistant:** Summarizes documents and automatically generates review question sets.
+- **PDF Chat App:** Retrieves and answers questions based on curriculum document repositories.
+- **AI Code Reviewer:** Analyzes source code, detects bugs, and proposes Backend logic optimization.
+- **Personal Second Brain:** Systematizes notes and performs intelligent data lookup according to context.
 
-#### Identifying the drawbacks of legacy application architecture
+### Lessons Learned
+- **Mindset of building a "Personal Second Brain":** Store and link knowledge into a fixed database, using AI for quick retrieval when needed to reduce biological memory load and focus on logical thinking.
+- **Context Engineering Skills:** Becomes a core supporting skill for software engineers, knowing how to isolate input data to limit AI Hallucination.
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+### Application to Work and Study
+- **Building a digital knowledge base for capstone project:** Digitizing design documents, third-party API integration docs (GHN, Ahamove), and database error handling solutions to use AI as a fast lookup portal when developing Backend modules.
+- **Standardizing work processes with AI:** Applying the 4-element framework (Goal - Info - Constraints - Criteria) to clearly declare framework version, system architecture, and clean code criteria before requesting AI to generate code or review bugs.
+- **Optimizing self-study process:** Using AI to automatically generate counter-testing quizzes from lecture slides, preparing foundational knowledge for course exams and academic defenses.
 
-#### Transitioning to modern application architecture – Microservices
-
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
-
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
-
-#### Domain-Driven Design (DDD)
-
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
-
-#### Event-Driven Architecture
-
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
-
-#### Compute Evolution
-
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
-
-#### Amazon Q Developer
-
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
-
-### Key Takeaways
-
-#### Design Mindset
-
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
-
-#### Technical Architecture
-
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
-
-#### Modernization Strategy
-
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
-
-### Applying to Work
-
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
-
-### Event Experience
-
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
-
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
-
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
-
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
-
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
-
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
+### Practical Experience at the Event
+- Gained practical technical perspectives from industry experts, understanding the process of applying AI to optimize work efficiency.
+- Clearly recognized industry trends: The future is competition in the capacity to exploit and work alongside AI among tech professionals.
+- The event attracted a large number of students from many universities. Due to Hall 26 being overcrowded, the organizers flexibly arranged for me to move to another dedicated room to watch via projector. Although watching indirectly, transmission quality and knowledge content remained fully guaranteed. Notably, throughout the session, support staff frequently dropped by the room to ask interactive questions and answer students' queries directly. At the end of the program, I also joined interactive minigames and received meaningful gifts from the organizers.
 
 #### Some event photos
-*Add your event photos here*  
 
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+![Event check-in](/images/4-EventParticipated/check1.jpg "Seating area during speaker presentation")

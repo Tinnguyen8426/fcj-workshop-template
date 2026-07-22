@@ -1,82 +1,73 @@
 ---
-title : "Kiểm tra Gateway Endpoint"
-date : 2024-01-01 
+title : "Đóng gói & Triển khai Backend lên AWS Lambda"
+date : 2026-07-20
 weight : 2
 chapter : false
-pre : " <b> 5.3.2 </b> "
+pre : " <b> 5.3.2. </b> "
 ---
 
-#### Tạo S3 bucket
+#### Bước 1: Biên dịch & Đóng gói Uber-JAR với Maven
 
-1. Đi đến S3 management console
-2. Trong Bucket console, chọn **Create bucket**
+Mở terminal trong thư mục `gearstore-backend` và thực hiện lệnh đóng gói:
 
-![Create bucket](/images/5-Workshop/5.3-S3-vpc/create-bucket.png)
+```bash
+cd gearstore-backend
+mvn clean package
+```
 
-3. Trong Create bucket console
-+ Đặt tên bucket: chọn 1 tên mà không bị trùng trong phạm vi toàn cầu (gợi ý: lab\<số-lab\>\<tên-bạn\>)
+Thư viện `maven-shade-plugin` sẽ tạo ra file `target/backend-0.0.1-SNAPSHOT.jar` chứa đầy đủ Spring Boot 3 & AWS SDK dependencies.
 
-![Bucket name](/images/5-Workshop/5.3-S3-vpc/bucket-name.png)
+#### Bước 2: Tạo File Cấu hình AWS SAM (`template.yaml`)
 
+Tạo file `template.yaml` trong thư mục `gearstore-backend`:
 
-+ Giữ nguyên giá trị của các fields khác (default)
-+ Kéo chuột xuống và chọn **Create bucket**
+```yaml
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: GearStore Backend Spring Boot 3 Lambda Function
 
-![Create](/images/5-Workshop/5.3-S3-vpc/create-button.png)    
+Resources:
+  GearStoreBackendFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: target/backend-0.0.1-SNAPSHOT.jar
+      Handler: com.gearstore.backend.StreamLambdaHandler::handleRequest
+      Runtime: java21
+      MemorySize: 1024
+      Timeout: 30
+      Environment:
+        Variables:
+          AWS_DYNAMODB_REGION: us-east-1
+      Policies:
+        - AmazonDynamoDBFullAccess
+        - AmazonS3FullAccess
+      Events:
+        ProxyApi:
+          Type: HttpApi
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
 
-+ Tạo thành công S3 bucket
+Outputs:
+  ApiEndpoint:
+    Description: "API Gateway Endpoint URL"
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com"
+```
 
-![Success](/images/5-Workshop/5.3-S3-vpc/bucket-success.png)
+#### Bước 3: Triển khai bằng AWS SAM CLI
 
-#### Kết nối với EC2 bằng session manager
+Chạy các lệnh triển khai lên Cloud:
 
-+ Trong workshop này, bạn sẽ dùng AWS Session Manager để kết nối đến các EC2 instances. Session Manager là 1 tính năng trong dịch vụ Systems Manager được quản lý hoàn toàn bởi AWS. System manager cho phép bạn quản lý Amazon EC2 instances và các máy ảo on-premises (VMs)thông qua 1 browser-based shell. Session Manager cung cấp khả năng quản lý phiên bản an toàn và có thể kiểm tra mà không cần mở cổng vào, duy trì máy chủ bastion host hoặc quản lý khóa SSH.
+```bash
+sam build
+sam deploy --guided
+```
 
-+ First Cloud AI Journey [Lab](https://000058.awsstudygroup.com/1-introduce/) để hiểu sâu hơn về Session manager.
+Điền các thông tin:
+- **Stack Name**: `gearstore-backend-stack`
+- **AWS Region**: `us-east-1`
+- **Confirm changes before deploy**: `N`
+- **Allow SAM CLI IAM role creation**: `Y`
 
-1. Trong AWS Management Console, gõ Systems Manager trong ô tìm kiếm và nhấn Enter:
-
-![system manager](/images/5-Workshop/5.3-S3-vpc/sm.png)
-
-2. Từ **Systems Manager** menu, tìm **Node Management** ở thanh bên trái và chọn **Session Manager**:
-
-![system manager](/images/5-Workshop/5.3-S3-vpc/sm1.png)
-
-3. Click Start Session, và chọn EC2 instance tên **Test-Gateway-Endpoint**. 
-{{% notice info %}}
-Phiên bản EC2 này đã chạy trong "VPC cloud" và sẽ được dùng để kiểm tra khả năng kết nối với Amazon S3 thông qua điểm cuối Cổng mà bạn vừa tạo (s3-gwe). {{% /notice %}}
-
-![Start session](/images/5-Workshop/5.3-S3-vpc/start-session.png)
-
-Session Manager sẽ mở browser tab mới với shell prompt: sh-4.2 $
-
-![Success](/images/5-Workshop/5.3-S3-vpc/start-session-success.png)
-
-Bạn đã bắt đầu phiên kết nối đến EC2 trong VPC Cloud thành công. Trong bước tiếp theo, chúng ta sẽ tạo một  S3 bucket và một tệp trong đó.
-#### Create a file and upload to s3 bucket
-
-1. Đổi về ssm-user's thư mục bằng lệnh "cd ~" 
-
-![Change user's dir](/images/5-Workshop/5.3-S3-vpc/cli1.png)
-
-2. Tạo 1 file để kiểm tra bằng lệnh "fallocate -l 1G testfile.xyz", 1 file tên "testfile.xyz" có kích thước 1GB sẽ được tạo.
-
-![Create file](/images/5-Workshop/5.3-S3-vpc/cli-file.png)
-
-3. Tải file mình vừa tạo lên S3 với lệnh "aws s3 cp testfile.xyz s3://your-bucket-name". Thay your-bucket-name bằng tên S3 bạn đã tạo.
-
-![Uploaded](/images/5-Workshop/5.3-S3-vpc/uploaded.png)
-
-Bạn đã tải thành công tệp lên bộ chứa S3 của mình. Bây giờ bạn có thể kết thúc session.
-
-#### Kiểm tra object trong S3 bucket
-
-1. Đi đến S3 console.  
-2. Click tên s3 bucket của bạn
-3. Trong Bucket console, bạn sẽ thấy tệp bạn đã tải lên S3 bucket của mình
-
-![Check S3](/images/5-Workshop/5.3-S3-vpc/check-s3-bucket.png)
-
-#### Tóm tắt
-
-Chúc mừng bạn đã hoàn thành truy cập S3 từ VPC. Trong phần này, bạn đã tạo gateway endpoint cho Amazon S3 và sử dụng AWS CLI để tải file lên. Quá trình tải lên hoạt động vì gateway endpoint cho phép giao tiếp với S3 mà không cần Internet gateway gắn vào "VPC Cloud". Điều này thể hiện chức năng của gateway endpoint như một đường dẫn an toàn đến S3 mà không cần đi qua pub    lic Internet.
+Sau khi hoàn tất, SAM CLI sẽ xuất ra URL API Gateway Endpoint:
+`https://xxxxxx.execute-api.us-east-1.amazonaws.com`

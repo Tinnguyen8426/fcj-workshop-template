@@ -1,59 +1,27 @@
 ---
 title: "Worklog Tuần 7"
-date: 2024-01-01
-weight: 1
+date: 2026-06-15
+weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 
 ### Mục tiêu tuần 7:
+* Thực hành cấu hình xây dựng hệ thống tự động hóa đóng gói ứng dụng bằng công cụ Apache Maven.
+* Nghiên cứu cơ chế hoạt động chuyên sâu của `maven-shade-plugin` trong việc gộp (aggregate) và nén toàn bộ mã nguồn compiled cùng tất cả các thư viện phụ thuộc (transitive dependencies) thành một tệp Uber/Fat JAR duy nhất.
+* Xử lý vấn đề trùng lặp các tệp cấu hình Spring (`META-INF/spring.handlers`, `META-INF/spring.schemas`, `META-INF/spring.factories`) bằng cách sử dụng các Resource Transformers.
+* Loại bỏ các tệp chữ ký số bảo mật dư thừa (`*.SF`, `*.DSA`, `*.RSA`) từ các tệp JAR phụ thuộc để tránh lỗi `Invalid signature file digest` khi thực thi trên Cloud.
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
-
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
+### Các công việc đã thực hiện:
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| 2   | - Nghiên cứu tài liệu Maven Build Lifecycle (phân biệt các phase `clean`, `compile`, `test`, `package`, `verify`, `install`).<br>- So sánh sự khác nhau giữa file JAR thông thường (Original JAR) và Fat/Uber JAR đóng gói đầy đủ phụ thuộc. | 16/06/2026   | 16/06/2026      | <https://cloudjourney.awsstudygroup.com/maven-packaging-basics/> |
+| 3   | - Cấu hình `maven-shade-plugin` trong tệp `pom.xml`, định nghĩa goal `shade` liên kết với build phase `package`.<br>- Phân tích cấu trúc file Shaded JAR đầu ra, kiểm tra sự hiện diện của tất cả các class dependencies cần thiết cho runtime. | 17/06/2026   | 17/06/2026      | <https://cloudjourney.awsstudygroup.com/maven-shade-plugin-guide/> |
+| 4   | - Nghiên cứu cơ chế Resource Transformers trong `maven-shade-plugin`.<br>- Cấu hình `AppendingTransformer` cho tệp `META-INF/spring.handlers`, `META-INF/spring.schemas` và `META-INF/spring.factories` để gộp nhiều định nghĩa cấu hình từ các module Spring khác nhau mà không bị ghi đè. | 18/06/2026   | 18/06/2026      | <https://cloudjourney.awsstudygroup.com/maven-shade-plugin-guide/> |
+| 5   | - Cấu hình khối `<filters>` loại bỏ các tệp chữ ký số bảo mật của các thư viện bên thứ ba (`META-INF/*.SF`, `META-INF/*.DSA`, `META-INF/*.RSA`).<br>- Khắc phục triệt để rủi ro phát sinh lỗi `SecurityException: Invalid signature file digest` khi JVM khởi chạy file JAR trên AWS Lambda. | 19/06/2026   | 19/06/2026      | <https://cloudjourney.awsstudygroup.com/maven-shade-plugin-guide/> |
+| 6   | - Chạy thử nghiệm lệnh `mvn clean package` trên terminal, kiểm tra tính toàn vẹn và dung lượng của tệp Shaded JAR tạo ra.<br>- Đánh giá tốc độ giải nén artifact và chia sẻ cấu hình `pom.xml` chuẩn cho nhóm. | 20/06/2026   | 20/06/2026      | Tài liệu nội bộ dự án |
 
 ### Kết quả đạt được tuần 7:
-
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Làm chủ tiến trình tự động hóa build gói ứng dụng với Apache Maven.
+* Hiểu sâu cơ chế hoạt động của `maven-shade-plugin` và kỹ thuật gom tụ các thư viện phụ thuộc thành tệp Uber JAR duy nhất.
+* Cấu hình thành công Resource Transformers gộp file cấu hình Spring và Filters loại bỏ signature dư thừa, đảm bảo artifact tương thích tuyệt đối với môi trường thực thi AWS Cloud.

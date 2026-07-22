@@ -1,59 +1,27 @@
 ---
 title: "Worklog Tuần 11"
-date: 2024-01-01
-weight: 2
+date: 2026-07-13
+weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 
 ### Mục tiêu tuần 11:
+* Cấu hình tinh chỉnh chi tiết plugin `maven-shade-plugin` trong tệp `pom.xml` nhằm tối ưu hóa kích thước artifact đầu ra cho toàn bộ dự án GearStore.
+* Loại bỏ tất cả các thư viện phụ thuộc dư thừa (unused transitive dependencies), các thư viện phục vụ testing (`junit`, `mockito`), và các framework logging trùng lặp.
+* Thực hiện tiến trình đóng gói biên dịch hệ thống thành một tệp Shaded Uber JAR duy nhất với tên gọi `backend-0.0.1-SNAPSHOT.jar`.
+* Đảm bảo tệp JAR có dung lượng siêu nhỏ gọn để tối ưu hóa thời gian tải artifact (Code Download Time) và thời gian giải nén khi hàm Lambda xảy ra Cold Start.
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
-
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
+### Các công việc đã thực hiện:
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| 2   | - Rà soát toàn bộ cây phụ thuộc Maven bằng lệnh `mvn dependency:tree`, phát hiện các thư viện không cần thiết cho môi trường sản xuất.<br>- Cấu hình bổ sung thẻ `<scope>test</scope>` hoặc thẻ `<exclusions>` để loại bỏ các thư viện này khỏi JAR thực thi. | 14/07/2026   | 14/07/2026      | <https://cloudjourney.awsstudygroup.com/maven-dependency-optimization/> |
+| 3   | - Cấu hình khối `<configuration>` chi tiết cho `maven-shade-plugin` trong `pom.xml`.<br>- Thêm quy tắc `<createUnshadedJar>false</createUnshadedJar>` và tinh chỉnh `<artifactSet>` để chỉ chọn lọc những thư viện thực sự cần thiết. | 15/07/2026   | 15/07/2026      | <https://cloudjourney.awsstudygroup.com/maven-shade-advanced/> |
+| 4   | - Bổ sung các Resource Transformers: `ManifestResourceTransformer` (khai báo Main-Class / Handler Entry Point) và `ServicesResourceTransformer` (giúp gộp các file `META-INF/services/*` cho Java SPI / Spring factories). | 16/07/2026   | 16/07/2026      | <https://cloudjourney.awsstudygroup.com/maven-shade-advanced/> |
+| 5   | - Thực thi lệnh biên dịch nén `mvn clean package -DskipTests`, quan sát quá trình Shade nén các class file.<br>- Kiểm tra kích thước file output `target/backend-0.0.1-SNAPSHOT.jar`: Dung lượng đã được tối ưu siêu nhỏ gọn (chỉ còn ~35 MB so với ~110 MB ban đầu). | 17/07/2026   | 17/07/2026      | <https://cloudjourney.awsstudygroup.com/maven-shade-advanced/> |
+| 6   | - Sử dụng công cụ `jar -tf target/backend-0.0.1-SNAPSHOT.jar` để kiểm tra danh sách class bên trong, đảm bảo lớp `StreamLambdaHandler.class` nằm đúng đường dẫn root package.<br>- Bàn giao file JAR hoàn chỉnh cho nhóm để chuẩn bị deploy. | 18/07/2026   | 18/07/2026      | Tài liệu nội bộ dự án |
 
 ### Kết quả đạt được tuần 11:
-
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Hoàn thành tinh chỉnh cấu hình `maven-shade-plugin` đạt chuẩn chuyên nghiệp cho bài toán Serverless Java.
+* Loại bỏ thành công 100% các phụ thuộc không dùng tới, cắt giảm tới 68% dung lượng file JAR xuống chỉ còn ~35 MB.
+* Biên dịch thành công tệp artifact thực thi duy nhất `backend-0.0.1-SNAPSHOT.jar`, sẵn sàng triển khai lên môi trường AWS Cloud với tốc độ Cold Start tối ưu.

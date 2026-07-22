@@ -1,57 +1,27 @@
 ---
 title: "Week 2 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-05-11
+weight: 2
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 2 Objectives:
+* Complete Module 1 & Module 2 focusing on server virtualization and advanced cloud authorization models.
+* Deeply analyze JSON syntax and structural blocks of IAM Policy (`Effect`, `Action`, `Resource`, `Condition`, and Explicit Deny rules).
+* Master Amazon Resource Name (ARN) formatting standards across AWS services.
+* Provision and apply IAM Execution Roles for Serverless compute services adhering strictly to the Principle of Least Privilege.
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
-
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+### Tasks Carried Out This Week:
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
+| 2   | - Studied Modules 1 & 2 covering virtual machine architecture (EC2) and identity/resource-based access control models.<br>- Analyzed structural JSON policy blocks: Statement, Effect (Allow/Explicit Deny), Action, and Resource ARN. | 12/05/2026   | 12/05/2026      | <https://cloudjourney.awsstudygroup.com/iam-basics/> |
+| 3   | - Practiced evaluating sample IAM policies, verifying how Explicit Deny overrides all Allow statements within the IAM evaluation engine.<br>- Wrote custom JSON policies enforcing IP-range conditions (`aws:SourceIp`). | 13/05/2026   | 13/05/2026      | <https://cloudjourney.awsstudygroup.com/iam-policies/> |
+| 4   | - Investigated IAM Role architecture and temporary credential delegation via AWS Security Token Service (STS AssumeRole).<br>- Differentiated identity lifecycles between long-term IAM Users and service-bound IAM Roles. | 14/05/2026   | 14/05/2026      | <https://cloudjourney.awsstudygroup.com/iam-roles/> |
+| 5   | - Configured an IAM Execution Role dedicated to AWS Lambda serverless execution environments.<br>- Set up Trust Policies allowing `lambda.amazonaws.com` service principal to assume the role and attached CloudWatch logging permissions. | 15/05/2026   | 15/05/2026      | <https://cloudjourney.awsstudygroup.com/iam-execution-role/> |
+| 6   | - Audited IAM Role configurations using AWS CLI tools (`aws iam get-role` and `aws iam list-attached-role-policies`).<br>- Documented IAM research findings and shared insights with team members. | 16/05/2026   | 16/05/2026      | Internal Team Document |
 
 ### Week 2 Achievements:
-
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Gained comprehensive understanding of IAM evaluation logic, Explicit Deny precedence, and JSON policy construction.
+* Mastered Amazon Resource Name (`arn:aws:service:region:account-id:resource-id`) formatting rules.
+* Proficiently configured IAM Execution Roles for serverless compute workloads, enforcing Least Privilege access controls.

@@ -1,19 +1,67 @@
 ---
-title : "Giới thiệu"
-date : 2024-01-01 
-weight : 1
+title : "Tổng quan Workshop & Kiến trúc Mã nguồn"
+date : 2026-07-20 
+weight : 1 
 chapter : false
 pre : " <b> 5.1. </b> "
 ---
 
-#### Giới thiệu về VPC Endpoint
+#### Giới thiệu về Mã nguồn `GearStore Backend`
 
-+ Điểm cuối VPC (endpoint) là thiết bị ảo. Chúng là các thành phần VPC có thể mở rộng theo chiều ngang, dự phòng và có tính sẵn sàng cao. Chúng cho phép giao tiếp giữa tài nguyên điện toán của bạn và dịch vụ AWS mà không gây ra rủi ro về tính sẵn sàng.
-+ Tài nguyên điện toán đang chạy trong VPC có thể truy cập Amazon S3 bằng cách sử dụng điểm cuối Gateway. Interface Endpoint  PrivateLink có thể được sử dụng bởi tài nguyên chạy trong VPC hoặc tại TTDL.
+Dự án `GearStore Backend` (`gearstore-backend`) là hệ thống RESTful API được xây dựng với các thành phần kỹ thuật chính:
 
-#### Tổng quan về workshop
-Trong workshop này, bạn sẽ sử dụng hai VPC.
-+ **"VPC Cloud"** dành cho các tài nguyên cloud như Gateway endpoint và EC2 instance để kiểm tra.
-+ **"VPC On-Prem"** mô phỏng môi trường truyền thống như nhà máy hoặc trung tâm dữ liệu của công ty. Một EC2 Instance chạy phần mềm StrongSwan VPN đã được triển khai trong "VPC On-prem" và được cấu hình tự động để thiết lập đường hầm VPN Site-to-Site với AWS Transit Gateway. VPN này mô phỏng kết nối từ một vị trí tại TTDL (on-prem) với AWS cloud. Để giảm thiểu chi phí, chỉ một phiên bản VPN được cung cấp để hỗ trợ workshop này. Khi lập kế hoạch kết nối VPN cho production workloads của bạn, AWS khuyên bạn nên sử dụng nhiều thiết bị VPN để có tính sẵn sàng cao.
+- **Spring Boot 3.3.0 & Java 21**: Framework chính xử lý logic nghiệp vụ.
+- **AWS Serverless Container**: Class `com.gearstore.backend.StreamLambdaHandler` khởi tạo `SpringBootLambdaContainerHandler` giúp chuyển tiếp HTTP requests từ API Gateway vào Spring DispatcherServlet mà không làm thay đổi cấu trúc REST Controller.
+- **AWS SDK v2 (`dynamodb-enhanced`)**: Sử dụng `StaticTableSchema` map chính xác cấu trúc dữ liệu với hai bảng DynamoDB `GearStore_Products` và `GearStore_Users`.
+- **Amazon S3 Integration**: Upload trực tiếp file ảnh sản phẩm và hỗ trợ xóa tự động ảnh cũ khi cập nhật / xóa sản phẩm.
 
-![overview](/images/5-Workshop/5.1-Workshop-overview/diagram1.png)
+#### Cấu trúc Thư mục Mã nguồn (`com.gearstore.backend`)
+
+```
+gearstore-backend/src/main/java/com/gearstore/backend/
+├── BackendApplication.java       # Spring Boot main entry point
+├── StreamLambdaHandler.java      # RequestStreamHandler cho AWS Lambda
+├── config/
+│   ├── DynamoDbConfig.java       # Bean DynamoDbClient & DynamoDbEnhancedClient
+│   └── WebConfig.java            # Cấu hình CORS
+├── entity/
+│   ├── ProductEntity.java        # DynamoDbBean cho GearStore_Products
+│   └── UserEntity.java           # Model cho GearStore_Users
+├── repository/
+│   ├── ProductRepository.java    # Data Access Layer cho Bảng Sản phẩm
+│   └── UserRepository.java       # Data Access Layer cho Bảng Người dùng
+└── controller/
+    ├── AuthController.java       # APIs đăng nhập (/auth/login), đăng ký (/auth/register), quản lý user
+    └── ProductController.java    # APIs lấy sản phẩm (/products), upload ảnh (/products/upload), seed DB (/products/reset-database)
+```
+
+#### Sơ đồ Kiến trúc Hệ thống (System Architecture Diagram)
+
+![Sơ đồ kiến trúc hệ thống](/images/5-Workshop/5.1-Workshop-overview/diagram1.png)
+
+#### Luồng xử lý Request trên AWS
+
+```
+[ Client / Postman / Frontend ]
+               │
+               ▼  HTTP Request (GET/POST/PUT/DELETE)
+    ┌──────────────────────┐
+    │  Amazon API Gateway  │ (HttpApiV2 / REST Proxy)
+    └──────────┬───────────┘
+               │  Proxy Stream Event
+               ▼
+    ┌──────────────────────┐
+    │  AWS Lambda Function │ Handler: com.gearstore.backend.StreamLambdaHandler
+    └──────────┬───────────┘
+               │
+               ▼  Forward to Spring Boot DispatcherServlet
+    ┌───────────────────────────┐
+    │ ProductController / Auth  │
+    └─────┬───────────────┬─────┘
+          │               │
+          ▼               ▼
+┌──────────────────┐  ┌─────────────────────┐
+│ Amazon DynamoDB  │  │      Amazon S3      │
+│(GearStore_*)     │  │(gearstore-data-img) │
+└──────────────────┘  └─────────────────────┘
+```

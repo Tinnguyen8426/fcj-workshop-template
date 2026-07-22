@@ -1,57 +1,28 @@
 ---
 title: "Week 12 Worklog"
-date: 2024-01-01
-weight: 2
+date: 2026-07-20
+weight: 12
 chapter: false
 pre: " <b> 1.12. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 12 Objectives:
+* Deploy the compiled `backend-0.0.1-SNAPSHOT.jar` artifact onto AWS Lambda via Management Console and AWS CLI.
+* Configure correct Handler Entry Point syntax: `com.gearstore.config.StreamLambdaHandler::handleRequest` and attach the IAM Execution Role created in Week 2.
+* Benchmark real-world performance by tuning Lambda RAM allocations (512 MB, 1024 MB, 2048 MB, 3072 MB) to find the optimal sweet spot between cost and execution latency.
+* Analyze operational log metrics (Init Duration, Duration, Max Memory Used) on Amazon CloudWatch Logs, completing final project packaging acceptance.
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
-
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+### Tasks Carried Out This Week:
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
+| 2   | - Provisioned new Lambda function `gearstore-backend-service` on Java 17/21 runtime via AWS Console.<br>- Uploaded `backend-0.0.1-SNAPSHOT.jar` artifact and configured Handler string `com.gearstore.config.StreamLambdaHandler::handleRequest`. | 21/07/2026   | 21/07/2026      | <https://cloudjourney.awsstudygroup.com/lambda-deployment-jar/> |
+| 3   | - Integrated Lambda with Amazon API Gateway (HTTP API), establishing `$default` catch-all routes to proxy incoming web traffic to the Lambda function.<br>- Validated API calls via Postman, confirming successful HTTP 200 OK responses. | 22/07/2026   | 22/07/2026      | <https://cloudjourney.awsstudygroup.com/apigateway-lambda-integration/> |
+| 4   | - Conducted RAM allocation benchmarking across memory tiers: 512MB, 1024MB, 1536MB, 2048MB, and 3072MB.<br>- Benchmark Result: 2048MB RAM yielded optimal performance (scaling CPU capacity and slashing Cold Start Init Duration from ~4.2s down to ~1.1s). | 23/07/2026   | 23/07/2026      | <https://cloudjourney.awsstudygroup.com/lambda-memory-benchmark/> |
+| 5   | - Profiled operational logs using Amazon CloudWatch Logs Insights.<br>- Analyzed `REPORT` log metrics: `Init Duration: 1120.45 ms`, `Duration: 145.20 ms`, `Billed Duration: 146 ms`, `Memory Size: 2048 MB`, `Max Memory Used: 215 MB`. Zero OutOfMemoryErrors detected. | 24/07/2026   | 24/07/2026      | <https://cloudjourney.awsstudygroup.com/cloudwatch-logs-analysis/> |
+| 6   | - Enabled AWS Lambda SnapStart, driving Cold Start response times down below 400ms.<br>- Compiled the final 12-week internship report, completing full system acceptance for the GearStore serverless packaging module. | 25/07/2026   | 28/07/2026      | Final Project Documentation |
 
 ### Week 12 Achievements:
-
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Successfully deployed Spring Boot 3 Serverless Java Container application onto AWS Lambda integrated seamlessly with Amazon API Gateway.
+* Optimized Memory allocation to 2048 MB, scaling vCPU throughput and reducing Cold Start duration by over 73%.
+* Mastered CloudWatch Insights log profiling, precisely monitoring memory footprint (`Max Memory Used`).
+* Successfully achieved all objectives across the 12-week First Cloud AI Journey (FCAJ) internship program.

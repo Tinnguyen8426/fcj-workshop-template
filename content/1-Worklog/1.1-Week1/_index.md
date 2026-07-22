@@ -1,57 +1,28 @@
 ---
 title: "Week 1 Worklog"
-date: 2024-01-01
+date: 2026-05-04
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 1 Objectives:
+* Attend orientation sessions of the First Cloud AI Journey (FCAJ) program, review technical documentation, and setup local development environments.
+* Install and configure AWS Command Line Interface (AWS CLI v2) on local machines, managing secure Named Profiles (`~/.aws/credentials` and `~/.aws/config`).
+* Verify secure connection from local machines to AWS Cloud infrastructure using AWS Security Token Service (AWS STS).
+* Configure automated budget monitoring rules via AWS Budgets & Billing Alarms to prevent unexpected lab costs.
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
-
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+### Tasks Carried Out This Week:
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
+| 2   | - Attended program kick-off orientation meeting, reviewed the 12-week internship roadmap and weekly reporting guidelines.<br>- Conducted theoretical research on AWS Cloud architecture and fundamental security practices. | 05/05/2026   | 05/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
+| 3   | - Downloaded and installed AWS CLI v2 package on local workstation.<br>- Generated Access Keys from AWS Management Console and executed `aws configure` to set default Region (`ap-southeast-1`) and JSON output format. | 06/05/2026   | 06/05/2026      | <https://cloudjourney.awsstudygroup.com/1-aws-cli-setup/> |
+| 4   | - Researched named profile configuration (`--profile`) to segregate Development and Staging environments within `~/.aws/credentials`.<br>- Verified identity credentials via `aws sts get-caller-identity` to confirm proper IAM permissions. | 07/05/2026   | 07/05/2026      | <https://cloudjourney.awsstudygroup.com/1-aws-cli-setup/> |
+| 5   | - Configured cost alert rules (Cost Budget Limit at $10) using AWS Budgets.<br>- Set up Email notification channels to auto-trigger alerts when actual or forecasted spending exceeds 80% threshold. | 08/05/2026   | 08/05/2026      | <https://cloudjourney.awsstudygroup.com/2-billing-alert/> |
+| 6   | - Reviewed AWS Billing Dashboard and AWS Cost Explorer to confirm no idle resources were incurring unintended charges.<br>- Summarized Week 1 progress report and conducted group sync meeting. | 09/05/2026   | 09/05/2026      | Internal Team Document |
 
 ### Week 1 Achievements:
-
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Mastered the internship roadmap and technical requirements of the First Cloud AI Journey program.
+* Established a fully configured CLI development environment using AWS CLI v2 with secure Named Profiles.
+* Gained proficiency in identity verification using `aws sts get-caller-identity` prior to conducting complex cloud operations.
+* Successfully implemented cost control via AWS Budgets, protecting cloud accounts from financial drift during lab experiments.

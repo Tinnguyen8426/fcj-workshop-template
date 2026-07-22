@@ -1,58 +1,27 @@
 ---
 title: "Worklog Tuần 6"
-date: 2024-01-01
-weight: 1
+date: 2026-06-08
+weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 
 ### Mục tiêu tuần 6:
+* Nghiên cứu tài liệu mã nguồn mở của dự án AWS Serverless Java Container (`aws-serverless-java-container`).
+* Tìm hiểu cơ chế cấu hình và ánh xạ luồng dữ liệu (Request/Response mapping) giữa một Web Framework truyền thống (Spring Boot) sang môi trường thực thi Serverless Lambda.
+* Khám phá thiết kế mẫu Adapter Pattern giúp chuyển đổi các `AwsProxyRequest` / `AwsProxyResponse` từ API Gateway / ALB thành `HttpServletRequest` / `HttpServletResponse` chuẩn Java Servlet API.
+* Đánh giá giải pháp chạy ứng dụng Web trên Lambda mà không cần sửa đổi cấu trúc Controller hay Business Logic hiện có.
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
-
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
+### Các công việc đã thực hiện:
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| 2   | - Nghiên cứu kho mã nguồn mở `aws-serverless-java-container` trên GitHub và tài liệu hướng dẫn tích hợp của AWS.<br>- Phân tích bài toán thách thức: Làm thế nào để ứng dụng Spring Boot vốn thiết kế chạy trên Web Server (Tomcat/Jetty) có thể nhận request từ AWS Lambda. | 09/06/2026   | 09/06/2026      | <https://cloudjourney.awsstudygroup.com/aws-serverless-java-container/> |
+| 3   | - Nghiên cứu mô hình kiến trúc Adapter Pattern áp dụng trong thư viện `aws-serverless-java-container`.<br>- Phân tích cách thức adapter tiếp nhận sự kiện JSON (`AwsProxyRequest`) gửi từ API Gateway, tạo ra đối tượng giả lập `AwsProxyHttpServletRequest` tuân thủ Servlet API spec. | 10/06/2026   | 10/06/2026      | <https://cloudjourney.awsstudygroup.com/aws-serverless-java-container/> |
+| 4   | - Tìm hiểu quy trình xử lý phản hồi ngược: Sau khi Spring Boot Controller trả về dữ liệu, adapter thu gom `HttpServletResponse` và đóng gói thành đối tượng `AwsProxyResponse` nhị phân để trả về cho API Gateway. | 11/06/2026   | 11/06/2026      | <https://cloudjourney.awsstudygroup.com/aws-serverless-java-container/> |
+| 5   | - Đánh giá ưu và nhược điểm của việc nạp toàn bộ Spring Boot Application Context vào Lambda Execution Environment so với việc viết các hàm Micro-function đơn lẻ.<br>- Phân tích lợi ích duy trì toàn bộ kiến trúc RESTful Controllers, Security Filter Chain và Dependency Injection. | 12/06/2026   | 12/06/2026      | <https://cloudjourney.awsstudygroup.com/serverless-springboot-architecture/> |
+| 6   | - Tổng hợp sơ đồ luồng dữ liệu (Sequence Diagram) từ API Gateway qua Adapter đến Spring Boot Controller.<br>- Báo cáo kết quả nghiên cứu lý thuyết với cán bộ hướng dẫn và nhóm làm dự án. | 13/06/2026   | 13/06/2026      | Tài liệu nội bộ dự án |
 
 ### Kết quả đạt được tuần 6:
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Hiểu rõ cơ chế hoạt động của khung giải pháp mã nguồn mở AWS Serverless Java Container.
+* Nắm vững nguyên lý ánh xạ dữ liệu (Request/Response mapping) và cách thức Adapter Pattern tương thích giữa AWS Lambda Event format và Java Servlet API.
+* Định hình được phương án kiến trúc chuyển đổi ứng dụng Spring Boot 3 sang môi trường Serverless mà giữ nguyên 100% cấu hình Controllers và Business Logic.

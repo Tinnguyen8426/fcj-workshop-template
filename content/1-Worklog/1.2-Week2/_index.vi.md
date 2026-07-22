@@ -1,59 +1,27 @@
 ---
 title: "Worklog Tuần 2"
-date: 2024-01-01
-weight: 1
+date: 2026-05-11
+weight: 2
 chapter: false
 pre: " <b> 1.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 
 ### Mục tiêu tuần 2:
+* Hoàn thành học phần Module 1 & Module 2 về ảo hóa máy chủ và mô hình phân quyền nâng cao trên điện toán đám mây.
+* Nghiên cứu chuyên sâu cú pháp và cấu trúc JSON của IAM Policy (các khối `Effect`, `Action`, `Resource`, `Condition`, quy tắc ưu tiên Deny over Allow).
+* Tìm hiểu định dạng chuẩn của Amazon Resource Name (ARN) đối với các tài nguyên AWS.
+* Thiết lập và ứng dụng IAM Role (Execution Role) cho các dịch vụ compute không máy chủ (Serverless Compute) theo nguyên tắc quyền tối thiểu (Least Privilege Principle).
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
-
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
+### Các công việc đã thực hiện:
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| 2   | - Học Module 1 & 2 tổng quan về kiến trúc Virtual Machines (EC2) và các mô hình quản lý định danh identity-based / resource-based access control.<br>- Phân tích thành phần cấu trúc của một IAM Policy: Statement, Effect (Allow/Explicit Deny), Action, Resource ARN. | 12/05/2026   | 12/05/2026      | <https://cloudjourney.awsstudygroup.com/iam-basics/> |
+| 3   | - Thực hành phân tích các chính sách IAM Policy mẫu, nghiên cứu nguyên tắc Explicit Deny đánh bại mọi lệnh Allow trong quy trình đánh giá của IAM Engine.<br>- Viết thử nghiệm các đoạn mã JSON Policy tùy chỉnh hạn chế quyền truy cập theo địa chỉ IP nguồn (Source IP Condition). | 13/05/2026   | 13/05/2026      | <https://cloudjourney.awsstudygroup.com/iam-policies/> |
+| 4   | - Tìm hiểu kiến trúc IAM Role và quy trình ủy quyền tạm thời (Temporary Security Credentials) thông qua AWS Security Token Service (STS AssumeRole).<br>- Phân biệt sự khác nhau giữa IAM User (định danh cố định) và IAM Role (định danh linh hoạt gắn cho dịch vụ). | 14/05/2026   | 14/05/2026      | <https://cloudjourney.awsstudygroup.com/iam-roles/> |
+| 5   | - Thiết lập IAM Execution Role dành riêng cho môi trường thực thi Serverless Lambda.<br>- Cấu hình Trust Policy cho phép dịch vụ `lambda.amazonaws.com` đóng vai trò AssumeRole và gán Policy cấp quyền ghi log lên CloudWatch (`logs:CreateLogGroup`, `logs:CreateLogStream`, `logs:PutLogEvents`). | 15/05/2026   | 15/05/2026      | <https://cloudjourney.awsstudygroup.com/iam-execution-role/> |
+| 6   | - Tiến hành kiểm định phân quyền IAM Role trên AWS CLI bằng câu lệnh `aws iam get-role` và `aws iam list-attached-role-policies`.<br>- Tổng hợp báo cáo nghiên cứu lý thuyết IAM và chia sẻ kết quả với nhóm. | 16/05/2026   | 16/05/2026      | Tài liệu nội bộ dự án |
 
 ### Kết quả đạt được tuần 2:
-
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Nắm vững cơ chế đánh giá quyền hạn của IAM Engine, nguyên tắc Explicit Deny và quy chuẩn xây dựng tệp JSON Policy.
+* Hiểu rõ cấu trúc địa chỉ định danh tài nguyên AWS ARN (`arn:aws:service:region:account-id:resource-id`).
+* Thành thạo quy trình khởi tạo IAM Execution Role cho các dịch vụ tính toán không máy chủ (Serverless Compute), áp dụng triệt để nguyên tắc Least Privilege để đảm bảo an toàn hệ thống.

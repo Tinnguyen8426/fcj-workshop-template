@@ -1,59 +1,28 @@
 ---
 title: "Worklog Tuần 1"
-date: 2024-01-01
+date: 2026-05-04
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 
 ### Mục tiêu tuần 1:
+* Tham gia các buổi định hướng (Orientation) của chương trình First Cloud AI Journey (FCAJ), tiếp nhận tài liệu kỹ thuật và thiết lập môi trường phát triển cá nhân.
+* Cài đặt và cấu hình thành công công cụ dòng lệnh AWS CLI (v2) trên máy cục bộ, quản lý các tập cấu hình Named Profile bảo mật (`~/.aws/credentials` và `~/.aws/config`).
+* Kiểm tra khả năng kết nối an toàn từ máy cá nhân đến hạ tầng AWS Cloud thông qua giao thức Security Token Service (AWS STS).
+* Thiết lập các quy tắc cảnh báo ngân sách tự động bằng dịch vụ AWS Budgets & Billing Alarms nhằm kiểm soát chi phí thực thi bài lab.
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
-
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
+### Các công việc đã thực hiện:
+| Thứ | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| 2   | - Tham gia buổi họp Kick-off định hướng chương trình First Cloud AI Journey, tiếp nhận thông tin lộ trình 12 tuần thực tập và quy chuẩn báo cáo.<br>- Nghiên cứu tài liệu tổng quan kiến trúc AWS Cloud và các nguyên tắc bảo mật thông tin ban đầu. | 05/05/2026   | 05/05/2026      | <https://cloudjourney.awsstudygroup.com/> |
+| 3   | - Tải xuống và cài đặt bộ công cụ dòng lệnh AWS CLI v2 trên hệ điều hành cục bộ.<br>- Khởi tạo Access Key và Secret Access Key từ giao diện AWS Management Console, thực hiện cấu hình `aws configure` thiết lập Region chính (`ap-southeast-1`) và định dạng đầu ra JSON. | 06/05/2026   | 06/05/2026      | <https://cloudjourney.awsstudygroup.com/1-aws-cli-setup/> |
+| 4   | - Nghiên cứu cơ chế cấu hình nhiều profile (`--profile`) để phân tách môi trường Development và Staging trên tệp `~/.aws/credentials`.<br>- Chạy câu lệnh kiểm tra định danh `aws sts get-caller-identity` để xác thực Access Key đã active thành công và đúng IAM Role/User được gán. | 07/05/2026   | 07/05/2026      | <https://cloudjourney.awsstudygroup.com/1-aws-cli-setup/> |
+| 5   | - Truy cập dịch vụ AWS Budgets, xây dựng chính sách cảnh báo chi phí chi tiết (Cost Budget Limit) ở ngưỡng 10 USD.<br>- Cấu hình kênh thông báo qua Email để tự động gửi cảnh báo khi mức chi phí thực tế hoặc dự báo (Forecasted) vượt quá 80% hạn mức ban đầu. | 08/05/2026   | 08/05/2026      | <https://cloudjourney.awsstudygroup.com/2-billing-alert/> |
+| 6   | - Thực hiện kiểm tra lại Billing Dashboard, phân tích biểu đồ chi phí phát sinh AWS Cost Explorer ban đầu để đảm bảo các dịch vụ không tạo tài nguyên ngầm gây tốn phí.<br>- Tổng hợp báo cáo công việc tuần 1 và họp thảo luận với nhóm phát triển. | 09/05/2026   | 09/05/2026      | Tài liệu nội bộ dự án |
 
 ### Kết quả đạt được tuần 1:
-
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+* Đã nắm vững lộ trình học tập và yêu cầu kỹ thuật của chương trình First Cloud AI Journey.
+* Thiết lập hoàn chỉnh môi trường phát triển với AWS CLI v2, quản lý an toàn thông tin xác thực qua Named Profile mà không cứng mã (hardcode) khóa bảo mật trong dự án.
+* Làm chủ câu lệnh kiểm tra kết nối `aws sts get-caller-identity`, đảm bảo tính đúng đắn của quyền hạn IAM User/Role trước khi thao tác các bài lab phức tạp.
+* Cấu hình thành công AWS Budgets, thiết lập ngưỡng bảo vệ tài khoản khỏi rủi ro chi phí phát sinh ngoài ý muốn trong suốt quá trình triển khai dự án.

@@ -1,57 +1,27 @@
 ---
 title: "Week 5 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-06-01
+weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 5 Objectives:
+* Study Module 4 covering OS-level Virtualization and Containerization technologies.
+* Practice containerizing applications using Docker engine, utilizing `.dockerignore` files and layer caching strategies.
+* Design Multi-stage build Dockerfiles separating compilation phases from runtime stages to shrink Java/Spring Boot container image sizes.
+* Provision an Amazon Elastic Container Registry (ECR) repository, authenticate Docker CLI with ECR, and push container images to cloud storage.
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
-
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+### Tasks Carried Out This Week:
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
+| 2   | - Studied Module 4 containerization concepts, comparing Virtual Machine architectures (hypervisor-based) vs Docker Containers (shared OS kernel).<br>- Installed Docker Desktop and validated container management commands (`docker run`, `docker ps`, `docker images`). | 02/06/2026   | 02/06/2026      | <https://cloudjourney.awsstudygroup.com/docker-basics/> |
+| 3   | - Researched standardized Dockerfile construction for Java/Spring Boot microservices.<br>- Analyzed layer caching impacts of `FROM`, `RUN`, `COPY`, `WORKDIR`, and `ENTRYPOINT` instructions on final image size. | 03/06/2026   | 03/06/2026      | <https://cloudjourney.awsstudygroup.com/dockerfile-best-practices/> |
+| 4   | - Implemented Multi-stage Dockerfile builds: Stage 1 leveraged Maven JDK base image to compile source code into JAR; Stage 2 utilized minimal Alpine/Distroless JRE to run the artifact.<br>- Reduced final container image size from ~800MB down to ~200MB. | 04/06/2026   | 04/06/2026      | <https://cloudjourney.awsstudygroup.com/docker-multistage/> |
+| 5   | - Provisioned a private repository on Amazon Elastic Container Registry (ECR).<br>- Executed `aws ecr get-login-password` to authenticate Docker CLI, applied `docker tag`, and pushed the image using `docker push` to Amazon ECR. | 05/06/2026   | 05/06/2026      | <https://cloudjourney.awsstudygroup.com/ecr-deployment/> |
+| 6   | - Enabled ECR Image Scanning on Push to automatically scan container images for known CVE security vulnerabilities.<br>- Documented containerization guidelines and shared technical setup with team members. | 06/06/2026   | 06/06/2026      | Internal Team Document |
 
 ### Week 5 Achievements:
-
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Gained deep comprehension of containerization benefits over traditional virtual machines.
+* Mastered Multi-stage Dockerfile packaging, successfully cutting Java/Spring Boot container image footprint by 75%.
+* Established secure container deployment pipelines pushing verified images to Amazon ECR.

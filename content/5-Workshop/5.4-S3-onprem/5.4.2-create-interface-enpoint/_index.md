@@ -1,43 +1,49 @@
 ---
-title : "Create an S3 Interface endpoint"
-date : 2024-01-01
+title : "Create S3 Bucket gearstore-data-images & Upload API"
+date : 2026-07-20
 weight : 2
 chapter : false
-pre : " <b> 5.4.2 </b> "
+pre : " <b> 5.4.2. </b> "
 ---
 
-In this section you will create and test an S3 interface endpoint using the simulated on-premises environment deployed as part of this workshop.
+#### Step 1: Create Amazon S3 Bucket `gearstore-data-images`
 
-1. Return to the Amazon VPC menu. In the navigation pane, choose Endpoints, then click Create Endpoint.
+1. Open **Amazon S3 Console** -> click **Create bucket**.
+2. **Bucket name**: `gearstore-data-images`
+3. **AWS Region**: `us-east-1`
+4. Uncheck **Block all public access** to enable public reads for product images.
+5. Click **Create bucket**.
 
-2. In Create endpoint console:
-+ Name the interface endpoint
-+ In Service category, choose **aws services** 
+#### Step 2: Analyzing `ProductController.java` Upload Logic
 
-![name](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint1.png)
+The `uploadProductImage` endpoint receives a `MultipartFile` and uploads it to S3:
 
-3.  In the Search box, type S3 and press Enter. Select the endpoint named com.amazonaws.us-east-1.s3. Ensure that the Type column indicates Interface.
+```java
+@PostMapping("/upload")
+public ResponseEntity<String> uploadProductImage(@RequestParam("file") MultipartFile file) {
+    if (file.isEmpty()) return ResponseEntity.badRequest().body("File rỗng!");
 
-![service](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint2.png)
+    try {
+        S3Client s3Client = S3Client.builder().region(Region.of(regionStr)).build();
+        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        Path tempFile = Files.createTempFile("upload_", fileName);
+        file.transferTo(tempFile.toFile());
 
-4. For VPC, select VPC Cloud from the drop-down.
-{{% notice warning %}}
-Make sure to choose "VPC Cloud" and not "VPC On-prem"
-{{% /notice %}}
-+ Expand **Additional settings** and ensure that Enable DNS name is *not* selected (we will use this in the next part of the workshop)
+        s3Client.putObject(
+            PutObjectRequest.builder()
+                .bucket("gearstore-data-images")
+                .key(fileName)
+                .contentType(file.getContentType())
+                .acl(ObjectCannedACL.PUBLIC_READ)
+                .build(),
+            tempFile
+        );
 
-![vpc](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint3.png)
-
-5. Select 2 subnets in the following AZs: us-east-1a and us-east-1b
-
-![subnets](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint4.png)
-
-6. For Security group, choose SGforS3Endpoint:
-
-![sg](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint5.png)
-
-7. Keep the default policy - full access and click Create endpoint
-
-![success](/images/5-Workshop/5.4-S3-onprem/s3-interface-endpoint-success.png)
-
-Congratulation on successfully creating S3 interface endpoint. In the next step, we will test the interface endpoint.
+        Files.delete(tempFile);
+        String s3Url = "https://gearstore-data-images.s3." + regionStr + ".amazonaws.com/" + fileName;
+        return ResponseEntity.ok(s3Url);
+    } catch (Exception e) {
+        return ResponseEntity.status(500).body("Lỗi upload: " + e.getMessage());
+    }
+}
+```

@@ -1,32 +1,48 @@
 ---
-title : "Clean up"
-date : 2024-01-01
+title : "API Testing & Cloud Resource Cleanup"
+date : 2026-07-20
 weight : 6
 chapter : false
 pre : " <b> 5.6. </b> "
 ---
-Congratulations on completing this workshop! 
-In this workshop, you learned architecture patterns for accessing Amazon S3 without using the Public Internet. 
-+ By creating a gateway endpoint, you enabled direct communication between EC2 resources and Amazon S3, without traversing an Internet Gateway. 
-+ By creating an interface endpoint you extended S3 connectivity to resources running in your on-premises data center via AWS Site-to-Site VPN or Direct Connect. 
 
-#### clean up
-1. Navigate to Hosted Zones on the left side of Route 53 console. Click the name of *s3.us-east-1.amazonaws.com* zone. Click Delete and confirm deletion by typing delete. 
+#### 1. Testing Backend Endpoints (cURL Test)
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+Execute cURL commands to verify API Gateway & Spring Boot Lambda integration:
 
-2. Disassociate the Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
+1. **Fetch All Products**:
+   ```bash
+   curl -X GET https://xxxxxx.execute-api.us-east-1.amazonaws.com/products
+   ```
+2. **Trigger Background Database Seeding**:
+   ```bash
+   curl -X POST https://xxxxxx.execute-api.us-east-1.amazonaws.com/products/reset-database
+   ```
+3. **Register New User**:
+   ```bash
+   curl -X POST https://xxxxxx.execute-api.us-east-1.amazonaws.com/auth/register \
+     -H "Content-Type: application/json" \
+     -d '{"username":"gamer1","password":"123","fullName":"Gamer Pro","email":"gamer@gmail.com"}'
+   ```
+4. **Login Verification**:
+   ```bash
+   curl -X POST https://xxxxxx.execute-api.us-east-1.amazonaws.com/auth/login \
+     -H "Content-Type: application/json" \
+     -d '{"username":"gamer1","password":"123"}'
+   ```
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+#### 2. Teardown Sequence
 
-4. Open the CloudFormation console  and delete the two CloudFormation Stacks that you created for this lab:
-+ PLOnpremSetup
-+ PLCloudSetup
+Purge provisioned resources to avoid unwanted cloud charges:
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+1. **Delete SAM Stack (AWS Lambda & API Gateway)**:
+   ```bash
+   cd gearstore-backend
+   sam delete --stack-name gearstore-backend-stack
+   ```
 
-5. Delete S3 buckets
-+ Open S3 console
-+ Choose the bucket we created for the lab, click and confirm empty. Click delete and confirm delete.
+2. **Purge S3 Bucket `gearstore-data-images`**:
+   - Open **S3 Console** -> select `gearstore-data-images` -> click **Empty** -> click **Delete bucket**.
 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+3. **Delete DynamoDB Tables**:
+   - Open **DynamoDB Console** -> select tables `GearStore_Products` and `GearStore_Users` -> click **Delete table**.
